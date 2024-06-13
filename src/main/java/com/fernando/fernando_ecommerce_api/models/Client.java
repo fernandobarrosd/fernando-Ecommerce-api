@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Client extends User {
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     @Column(name = "birth_date", nullable = false)
