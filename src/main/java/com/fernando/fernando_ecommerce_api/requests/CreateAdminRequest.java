@@ -1,9 +1,9 @@
 package com.fernando.fernando_ecommerce_api.requests;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
+@AllArgsConstructor
 public class CreateAdminRequest {
     private String name;
     private String email;
