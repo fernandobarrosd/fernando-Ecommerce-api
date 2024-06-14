@@ -1,6 +1,9 @@
 package com.fernando.fernando_ecommerce_api.models;
 
 import java.time.LocalDateTime;
+
+import com.fernando.fernando_ecommerce_api.requests.CreateProductRequest;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +32,13 @@ public class Product {
 
     @Column(nullable = false, name = "created_at")
     private LocalDateTime createdAt;
+
+
+    public Product(CreateProductRequest productRequest) {
+        this.title = productRequest.getTitle();
+        this.description = productRequest.getDescription();
+        this.quantity = productRequest.getQuantity();
+        this.unitPrice = productRequest.getUnitPrice();
+        this.createdAt = LocalDateTime.now();
+    }
 }
