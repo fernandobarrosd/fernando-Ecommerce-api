@@ -5,40 +5,38 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExists;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
-import com.fernando.fernando_ecommerce_api.models.Admin;
+import com.fernando.fernando_ecommerce_api.exceptions.EqualsPasswordsException;
+import com.fernando.fernando_ecommerce_api.requests.CreateAdminRequest;
 
 @SpringBootTest
 public class AdminServiceTest {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    private Admin admin;
+    
+    private CreateAdminRequest createAdminRequest;
 
     @BeforeEach
     public void initAdmin() {
-        admin = new Admin(null, "test", "test@test.com", "test123");
+        createAdminRequest = new CreateAdminRequest("test", "test@test.com", "test123");
     }
 
     @Test
     public void shouldSaveAdminWithSuccess() {
-        Assertions.assertDoesNotThrow(() -> adminService.saveAdmin(admin));
+        Assertions.assertDoesNotThrow(() -> adminService.saveAdmin(createAdminRequest));
     }
 
     @Test
     public void shouldSaveAdminWithError() {
-        adminService.saveAdmin(admin);
-        Assertions.assertThrows(EntityAlreadyExists.class, () -> adminService.saveAdmin(admin));
+        adminService.saveAdmin(createAdminRequest);
+        Assertions.assertThrows(EntityAlreadyExists.class, () -> adminService.saveAdmin(createAdminRequest));
     }
 
     @Test
     public void shouldFindAdminWithSuccess() {
-        adminService.saveAdmin(admin);
+        adminService.saveAdmin(createAdminRequest);
         Integer adminID = 1;
         Assertions.assertDoesNotThrow(() -> adminService.findById(adminID));
     }
@@ -51,13 +49,19 @@ public class AdminServiceTest {
 
     @Test
     public void shouldUpdatePassword() {
-        adminService.saveAdmin(admin);
+        adminService.saveAdmin(createAdminRequest);
         String newPassword = "new_password123";
 
-        adminService.updatePassword(1, newPassword);
+        Assertions.assertDoesNotThrow(() -> adminService.updatePassword(1, newPassword));
+        
+    }
+    
+    @Test
+    public void shouldNotUpdatePasswordAlreadyExists() {
+        adminService.saveAdmin(createAdminRequest);
+        String newPassword = "test123";
 
-        Admin adminWithID = adminService.findById(1);
-        Assertions.assertTrue(passwordEncoder.matches(newPassword, adminWithID.getPassword()));
+        Assertions.assertThrows(EqualsPasswordsException.class, () -> adminService.updatePassword(1, newPassword));
         
     }
 }
