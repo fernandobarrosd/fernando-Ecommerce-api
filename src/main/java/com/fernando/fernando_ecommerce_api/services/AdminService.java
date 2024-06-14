@@ -4,10 +4,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExists;
+import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 import com.fernando.fernando_ecommerce_api.models.Admin;
 import com.fernando.fernando_ecommerce_api.repositories.AdminRepository;
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AdminService {
@@ -28,6 +30,7 @@ public class AdminService {
         return admin;
     }
 
+    @Transactional
     public Admin updatePassword(Integer id, String newPassword) {
         Admin admin = findById(id);
         String passwordEncoded = passwordEncoder.encode(newPassword);
