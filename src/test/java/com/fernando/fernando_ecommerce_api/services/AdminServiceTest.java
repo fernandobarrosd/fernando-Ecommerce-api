@@ -35,19 +35,6 @@ public class AdminServiceTest {
     }
 
     @Test
-    public void shouldFindAdminWithSuccess() {
-        adminService.saveAdmin(createAdminRequest);
-        Integer adminID = 1;
-        Assertions.assertDoesNotThrow(() -> adminService.findById(adminID));
-    }
-
-    @Test
-    public void shouldFindAdminWithError() {
-        Integer adminID = 1;
-        Assertions.assertThrows(EntityNotFoundException.class, (() -> adminService.findById(adminID)));
-    }
-
-    @Test
     public void shouldUpdatePassword() {
         adminService.saveAdmin(createAdminRequest);
         String newPassword = "new_password123";
@@ -62,6 +49,13 @@ public class AdminServiceTest {
         String newPassword = "test123";
 
         Assertions.assertThrows(EqualsPasswordsException.class, () -> adminService.updatePassword(1, newPassword));
+        
+    }
+
+    @Test
+    public void shouldNotUpdatePasswordIfAdminNotExists() {
+        String newPassword = "test123";
+        Assertions.assertThrows(EntityNotFoundException.class, () -> adminService.updatePassword(1, newPassword));
         
     }
 }
