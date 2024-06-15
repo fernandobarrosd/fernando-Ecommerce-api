@@ -34,11 +34,7 @@ public class AdminService {
 
     @Transactional
     public void updatePassword(Integer id, String newPassword) {
-        Optional<Admin> adminOptional = adminRepository.findById(id);
-        if (adminOptional.isEmpty()) {
-            throw new EntityNotFoundException("Admin is not exists");
-        }
-        Admin admin = adminOptional.get();
+        Admin admin = findById(id);
         String currentEncodedPassword = admin.getPassword();
         
         if (passwordEncoder.matches(newPassword, currentEncodedPassword)) {
@@ -48,11 +44,11 @@ public class AdminService {
         adminRepository.updatePassword(id, passwordEncoded);
     }
 
-    public AdminResponse findById(Integer id) {
+    public Admin findById(Integer id) {
         Optional<Admin> adminOptional = adminRepository.findById(id);
         if (adminOptional.isEmpty()) {
             throw new EntityNotFoundException("Admin is not exists");
         }
-        return new AdminResponse(adminOptional.get());
+        return adminOptional.get();
     }
 }
