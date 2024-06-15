@@ -2,8 +2,10 @@ package com.fernando.fernando_ecommerce_api.responses;
 
 import com.fernando.fernando_ecommerce_api.models.Product;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ProductResponse {
     private Integer id;
     private String title;
