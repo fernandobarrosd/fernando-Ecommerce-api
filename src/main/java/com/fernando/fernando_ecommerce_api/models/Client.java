@@ -2,6 +2,8 @@ package com.fernando.fernando_ecommerce_api.models;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
+import com.fernando.fernando_ecommerce_api.requests.CreateClientRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -27,11 +29,18 @@ public class Client extends User {
         super();
     }
 
-    public Client(Integer id, String name, String email, String password, String cpf, LocalDateTime birthDate, List<Order> orders) {
+    public Client(Integer id, String name, String email, String password, String cpf, LocalDate birthDate, List<Order> orders) {
         super(id, name, email, password);
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.orders = orders;
+    }
+
+    public Client(CreateClientRequest clientRequest) {
+        super(null, clientRequest.name(), clientRequest.email(), clientRequest.password());
+        this.cpf = clientRequest.cpf();
+        this.birthDate = clientRequest.birthDate();
+        this.orders = new ArrayList<>();
     }
 
     
