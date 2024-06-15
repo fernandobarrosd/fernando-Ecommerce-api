@@ -32,13 +32,10 @@ public class ProductService {
 
     @Transactional
     public ProductResponse updateUnitPrice(Integer productID, Double newUnitPrice) {
-        if (productRepository.findById(productID).isEmpty()) {
-            throw new EntityNotFoundException("This product is not exists".formatted(productID));
-        }
-        Product product = productRepository.findById(productID).get();
+        ProductResponse productResponse = findById(productID);
         productRepository.updateUnitPrice(productID, newUnitPrice);
-        product.setUnitPrice(newUnitPrice);
-        return new ProductResponse(product);
+        productResponse.setUnitPrice(newUnitPrice);
+        return productResponse;
     }
 
     public List<ProductResponse> findAll() {
