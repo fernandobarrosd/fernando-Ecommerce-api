@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExists;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 import com.fernando.fernando_ecommerce_api.requests.CreateProductRequest;
 import com.fernando.fernando_ecommerce_api.responses.ProductResponse;
@@ -28,11 +30,19 @@ public class ProductServiceTest {
     }
 
     @Test
+    public void shouldSaveProductWithError() {
+        productService.saveProduct(productRequest);
+        Assertions.assertThrows(EntityAlreadyExists.class, () -> productService.saveProduct(productRequest));
+    }
+
+    @Test
     public void shouldDeleteProductWithSuccess() {
         productService.saveProduct(productRequest);
         Integer productID = 1;
         Assertions.assertDoesNotThrow(() -> productService.deleteProduct(productID));
     }
+
+    
 
     @Test
     public void shouldDeleteProductWithError() {
