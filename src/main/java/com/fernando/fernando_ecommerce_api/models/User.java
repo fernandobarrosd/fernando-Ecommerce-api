@@ -1,5 +1,7 @@
 package com.fernando.fernando_ecommerce_api.models;
 
+import com.fernando.fernando_ecommerce_api.enums.UserRole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,4 +30,7 @@ public abstract class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private UserRole role;
 }
