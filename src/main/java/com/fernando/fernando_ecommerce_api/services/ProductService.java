@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExists;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 import com.fernando.fernando_ecommerce_api.models.Product;
 import com.fernando.fernando_ecommerce_api.repositories.ProductRepository;
@@ -18,6 +19,9 @@ public class ProductService {
     private ProductRepository productRepository;
     
     public ProductResponse saveProduct(CreateProductRequest productRequest) {
+        if (productRepository.findByTitle(productRequest.getTitle()).isPresent()) {
+            throw new EntityAlreadyExists("Product %s title is already exists".formatted(productRequest.getTitle()));
+        }
         Product product = new Product(productRequest);
         productRepository.save(product);
         return new ProductResponse(product);
