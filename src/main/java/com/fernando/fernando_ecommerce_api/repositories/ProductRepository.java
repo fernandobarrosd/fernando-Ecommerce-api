@@ -1,11 +1,13 @@
 package com.fernando.fernando_ecommerce_api.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import com.fernando.fernando_ecommerce_api.models.Product;
+
 
 public interface ProductRepository extends JpaRepository<Product, Integer>{
     @Modifying
@@ -15,5 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
         Integer productID,
         
         @Param("newUnitPrice")
-        Double newUnitPrice);   
+        Double newUnitPrice);
+
+    Optional<Product> findByTitle(String title);
 }
