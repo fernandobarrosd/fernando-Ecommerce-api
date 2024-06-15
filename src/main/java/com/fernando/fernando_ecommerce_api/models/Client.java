@@ -1,8 +1,7 @@
 package com.fernando.fernando_ecommerce_api.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -19,7 +18,7 @@ public class Client extends User {
     private String cpf;
 
     @Column(name = "birth_date", nullable = false)
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
