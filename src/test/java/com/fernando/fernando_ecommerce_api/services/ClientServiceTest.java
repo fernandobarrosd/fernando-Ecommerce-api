@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 
-import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExists;
+import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
 import com.fernando.fernando_ecommerce_api.requests.CreateClientRequest;
 
 @SpringBootTest
@@ -51,7 +51,7 @@ public class ClientServiceTest {
         .birthDate(LocalDate.of(1980, 12, 5))
         .build();
 
-        Assertions.assertThrows(EntityAlreadyExists.class, () -> clientService.saveClient(clientRequest2));
+        Assertions.assertThrows(EntityAlreadyExistsException.class, () -> clientService.saveClient(clientRequest2));
     }
 
     @Test
@@ -77,6 +77,6 @@ public class ClientServiceTest {
         .birthDate(LocalDate.of(1980, 12, 5))
         .build();
 
-        Assertions.assertThrows(EntityAlreadyExists.class, () -> clientService.saveClient(clientRequest2));
+        Assertions.assertThrows(EntityAlreadyExistsException.class, () -> clientService.saveClient(clientRequest2));
     }
 }

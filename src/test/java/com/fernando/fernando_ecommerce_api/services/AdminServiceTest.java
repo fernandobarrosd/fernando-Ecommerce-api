@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExists;
+import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 import com.fernando.fernando_ecommerce_api.exceptions.EqualsPasswordsException;
 import com.fernando.fernando_ecommerce_api.requests.CreateAdminRequest;
@@ -31,7 +31,7 @@ public class AdminServiceTest {
     @Test
     public void shouldSaveAdminWithError() {
         adminService.saveAdmin(createAdminRequest);
-        Assertions.assertThrows(EntityAlreadyExists.class, () -> adminService.saveAdmin(createAdminRequest));
+        Assertions.assertThrows(EntityAlreadyExistsException.class, () -> adminService.saveAdmin(createAdminRequest));
     }
 
     @Test
