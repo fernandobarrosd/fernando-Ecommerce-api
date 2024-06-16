@@ -23,7 +23,7 @@ import lombok.Setter;
 @Table(name = "client_table")
 @Getter
 @Setter
-public class Client extends User implements UserDetails {
+public class Client extends User {
     @Column(nullable = false, unique = true)
     private String cpf;
 
@@ -50,16 +50,4 @@ public class Client extends User implements UserDetails {
         this.birthDate = clientRequest.birthDate();
         this.orders = new ArrayList<>();
     }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList(getRole().getValue());
-    }
-
-    @Override
-    public String getUsername() {
-       return getEmail();
-    }
-
-    
 }
