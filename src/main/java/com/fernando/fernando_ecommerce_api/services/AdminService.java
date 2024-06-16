@@ -1,13 +1,9 @@
 package com.fernando.fernando_ecommerce_api.services;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
-import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
-import com.fernando.fernando_ecommerce_api.exceptions.EqualsPasswordsException;
 import com.fernando.fernando_ecommerce_api.models.Admin;
 import com.fernando.fernando_ecommerce_api.repositories.AdminRepository;
 import com.fernando.fernando_ecommerce_api.requests.CreateAdminRequest;
@@ -30,25 +26,5 @@ public class AdminService {
         Admin admin = new Admin(createAdminRequest);
         adminRepository.save(admin);
         return new AdminResponse(admin);
-    }
-
-    @Transactional
-    public void updatePassword(Integer id, String newPassword) {
-        Admin admin = findById(id);
-        String currentEncodedPassword = admin.getPassword();
-        
-        if (passwordEncoder.matches(newPassword, currentEncodedPassword)) {
-            throw new EqualsPasswordsException("This %s password is already registered".formatted(newPassword));
-        }
-        String passwordEncoded = passwordEncoder.encode(newPassword);
-        adminRepository.updatePassword(id, passwordEncoded);
-    }
-
-    public Admin findById(Integer id) {
-        Optional<Admin> adminOptional = adminRepository.findById(id);
-        if (adminOptional.isEmpty()) {
-            throw new EntityNotFoundException("Admin is not exists");
-        }
-        return adminOptional.get();
     }
 }
