@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "admin_table")
-public class Admin extends User implements UserDetails {
+public class Admin extends User {
     public Admin() {
         super();
     }
@@ -22,15 +22,5 @@ public class Admin extends User implements UserDetails {
     public Admin(CreateAdminRequest adminRequest) {
         super(null, adminRequest.getName(), adminRequest.getEmail(), adminRequest.getPassword(), 
         UserRole.ADMIN);
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList(getRole().getValue());
-    }
-
-    @Override
-    public String getUsername() {
-        return getEmail();
     }
 }
