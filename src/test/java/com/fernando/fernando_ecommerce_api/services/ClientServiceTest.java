@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
-import com.fernando.fernando_ecommerce_api.requests.CreateClientRequest;
+import com.fernando.fernando_ecommerce_api.requests.ClientRequest;
 
 @SpringBootTest
 public class ClientServiceTest {
@@ -16,7 +16,7 @@ public class ClientServiceTest {
     
     @Test
     public void shouldSaveClientWithSuccess() {
-        CreateClientRequest clientRequest = CreateClientRequest
+        ClientRequest clientRequest = ClientRequest
         .builder()
         .name("Pedro")
         .email("pedro@test.com")
@@ -31,7 +31,7 @@ public class ClientServiceTest {
     @Test
     public void shouldSaveClientWithEmailAlreadyRegistered() {
         String email = "pedro@test.com";
-        CreateClientRequest clientRequest = CreateClientRequest
+        ClientRequest clientRequest = ClientRequest
         .builder()
         .name("Pedro")
         .email(email)
@@ -42,7 +42,7 @@ public class ClientServiceTest {
 
         clientService.saveClient(clientRequest);
 
-        CreateClientRequest clientRequest2 = CreateClientRequest
+        ClientRequest clientRequest2 = ClientRequest
         .builder()
         .name("Pedro")
         .email(email)
@@ -57,7 +57,7 @@ public class ClientServiceTest {
     @Test
     public void shouldSaveClientWithCpfAlreadyRegistered() {
         String cpf = "000.000.000-00";
-        CreateClientRequest clientRequest = CreateClientRequest
+        ClientRequest clientRequest = ClientRequest
         .builder()
         .name("Pedro")
         .email("pedro@test.com")
@@ -68,7 +68,7 @@ public class ClientServiceTest {
 
         clientService.saveClient(clientRequest);
 
-        CreateClientRequest clientRequest2 = CreateClientRequest
+        ClientRequest clientRequest2 = ClientRequest
         .builder()
         .name("Pedro")
         .email("pedro2@test.com")
