@@ -7,9 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.fernando.fernando_ecommerce_api.requests.CreateClientRequest;
-import com.fernando.fernando_ecommerce_api.requests.CreateOrderRequest;
-import com.fernando.fernando_ecommerce_api.requests.CreateProductRequest;
+import com.fernando.fernando_ecommerce_api.requests.ClientRequest;
+import com.fernando.fernando_ecommerce_api.requests.ProductRequest;
 import com.fernando.fernando_ecommerce_api.responses.OrderResponse;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 
@@ -25,32 +24,33 @@ public class OrderServiceTest {
     @Autowired
     private ProductService productService;
 
-    private CreateProductRequest[] productRequests;
+    private ProductRequest[] productRequests;
 
-    private CreateClientRequest clientRequest;
+    private ClientRequest clientRequest;
 
     @BeforeEach
     public void setup() {
-        clientRequest = new CreateClientRequest("Joaquim",
+        clientRequest = new ClientRequest("Joaquim",
          "joaquim@test.com", 
          "joaquim123",
           "000.000.000-00",
+          "11111-111",
         LocalDate.of(1980, 12, 10));
 
-        productRequests = new CreateProductRequest[]{
-            new CreateProductRequest(
+        productRequests = new ProductRequest[]{
+            new ProductRequest(
             "Caderno",
             "Caderno do batman",
             20,
             20.00),
 
-            new CreateProductRequest(
+            new ProductRequest(
             "Estojo",
             "Estojo do batman",
             20,
             50.00),
 
-            new CreateProductRequest(
+            new ProductRequest(
             "Mochila do homem aranha",
             "Mochila do homem aranha com o ziper de cor vermelha",
             15,
@@ -69,13 +69,9 @@ public class OrderServiceTest {
 
         var productsTitles = new String[]{ product1.getTitle(), product2.getTitle(), product3.getTitle() };
 
-        CreateOrderRequest orderRequest = new CreateOrderRequest(1, new String[]{
-            product1.getTitle(),
-            product2.getTitle(),
-            product3.getTitle()
-        });
+        
         var totalPrice = 115.00;
-        OrderResponse orderResponse = Assertions.assertDoesNotThrow(() -> orderService.saveOrder(orderRequest));
+        OrderResponse orderResponse = Assertions.assertDoesNotThrow(() -> orderService.saveOrder(1, productsTitles));
         Assertions.assertNotNull(orderResponse);
         Assertions.assertEquals(totalPrice, orderResponse.getTotalPrice());
         var productsTitles2 = List.of(orderResponse.getProducts()).stream()
@@ -86,18 +82,17 @@ public class OrderServiceTest {
 
     @Test
     public void shouldNotSaveOrderIfClientNotExists() {
-        CreateOrderRequest orderRequest = new CreateOrderRequest(1, new String[]{});
-        Assertions.assertThrows(EntityNotFoundException.class, () -> orderService.saveOrder(orderRequest));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> orderService.saveOrder(1, new String[]{}));
     }
 
     @Test
     public void shouldNotSaveOrderIfProductsNotExistis() {
         clientService.saveClient(clientRequest);
-        CreateOrderRequest orderRequest = new CreateOrderRequest(1, new String[]{
+        String[] productsTitles = new String[]{
             productRequests[0].getTitle(),
             productRequests[1].getTitle(),
             productRequests[2].getTitle()
-        });
-        Assertions.assertThrows(EntityNotFoundException.class, () -> orderService.saveOrder(orderRequest));
+        };
+        Assertions.assertThrows(EntityNotFoundException.class, () -> orderService.saveOrder(1, productsTitles));
     }
 }
