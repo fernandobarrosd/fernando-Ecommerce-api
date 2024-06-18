@@ -8,19 +8,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
-import com.fernando.fernando_ecommerce_api.requests.CreateProductRequest;
+import com.fernando.fernando_ecommerce_api.requests.ProductRequest;
 import com.fernando.fernando_ecommerce_api.responses.ProductResponse;
 
 @SpringBootTest
 public class ProductServiceTest {
-    private CreateProductRequest productRequest;
+    private ProductRequest productRequest;
 
     @Autowired
     private ProductService productService;
 
     @BeforeEach
     public void initProductRequest() {
-        productRequest = new CreateProductRequest("Caderno", "Caderno preto do batman", 20, 25.00);
+        productRequest = new ProductRequest("Caderno", "Caderno preto do batman", 20, 25.00);
     }
 
     @Test
