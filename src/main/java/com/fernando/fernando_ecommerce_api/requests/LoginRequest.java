@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record LoginRequestBody(
+public record LoginRequest(
     @NotNull(message = "The e-mail field not should be null")
     @Email(message = "The e-mail field should be in the email format")
     String email,
