@@ -13,7 +13,6 @@ import com.fernando.fernando_ecommerce_api.models.Product;
 import com.fernando.fernando_ecommerce_api.repositories.ClientRepository;
 import com.fernando.fernando_ecommerce_api.repositories.OrderRepository;
 import com.fernando.fernando_ecommerce_api.repositories.ProductRepository;
-import com.fernando.fernando_ecommerce_api.requests.CreateOrderRequest;
 import com.fernando.fernando_ecommerce_api.responses.OrderResponse;
 import com.fernando.fernando_ecommerce_api.responses.ProductResponse;
 
@@ -33,14 +32,14 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse saveOrder(CreateOrderRequest orderRequest) {
-        Optional<Client> clientOptional = clientRepository.findById(orderRequest.clientID());
+    public OrderResponse saveOrder(Integer clientID, String[] productsTitles) {
+        Optional<Client> clientOptional = clientRepository.findById(clientID);
         List<String> productsNotFounded = new ArrayList<>();
 
         if (clientOptional.isEmpty()) {
             throw new EntityNotFoundException("The client is not exists");
         }
-        for (String product : orderRequest.products()) {
+        for (String product : productsTitles) {
             if (productRepository.findByTitle(product).isEmpty()) {
                 productsNotFounded.add(product);
             }
@@ -56,7 +55,7 @@ public class OrderService {
         Client client = clientOptional.get();
         Double totalPrice = 0.00;
 
-        for (String productTitle : orderRequest.products()) {
+        for (String productTitle : productsTitles) {
             Product product = productRepository.findByTitle(productTitle).get();
             products.add(product);
             totalPrice += product.getUnitPrice();
@@ -70,7 +69,7 @@ public class OrderService {
         .id(orderSaved.getId())
         .products(productsResponses)
         .totalPrice(totalPrice)
-        .clientID(orderRequest.clientID())
+        .clientID(clientID)
         .build();
     }
 
@@ -131,5 +130,12 @@ public class OrderService {
         .products(productsResponses)
         .clientID(order.getClient().getId())
         .build();
+    }
+
+    public void deleteOrder(Integer orderID) {
+        if (orderRepository.findById(orderID).isEmpty()) {
+            throw new EntityNotFoundException("The order %d id is not exists".formatted(orderID));
+        }
+        orderRepository.deleteById(orderID);
     }
 }
