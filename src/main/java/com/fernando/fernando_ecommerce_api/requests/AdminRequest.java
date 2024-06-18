@@ -8,7 +8,7 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor
-public class CreateAdminRequest {
+public class AdminRequest {
     @NotNull(message = "The name field not should be null")
     @NotEmpty(message = "The name field not should be empty")
     private String name;
