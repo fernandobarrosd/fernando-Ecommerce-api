@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
-import com.fernando.fernando_ecommerce_api.requests.CreateAdminRequest;
+import com.fernando.fernando_ecommerce_api.requests.AdminRequest;
 
 @SpringBootTest
 public class AdminServiceTest {
@@ -14,11 +14,11 @@ public class AdminServiceTest {
     private AdminService adminService;
 
     
-    private CreateAdminRequest createAdminRequest;
+    private AdminRequest createAdminRequest;
 
     @BeforeEach
     public void initAdmin() {
-        createAdminRequest = new CreateAdminRequest("test", "test@test.com", "test123");
+        createAdminRequest = new AdminRequest("test", "test@test.com", "test123");
     }
 
     @Test
