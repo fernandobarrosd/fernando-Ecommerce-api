@@ -2,14 +2,16 @@ package com.fernando.fernando_ecommerce_api.requests;
 
 import java.time.LocalDate;
 import org.hibernate.validator.constraints.br.CPF;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 import lombok.Builder;
 
 @Builder
-public record CreateClientRequest(
+public record ClientRequest(
     @NotNull(message = "The name field not should be null")
     @NotEmpty(message = "The name field not should be empty")
     String name,
@@ -24,6 +26,10 @@ public record CreateClientRequest(
     @NotNull(message = "The cpf field not should be null")
     @CPF(message = "The cpf field should be in the cpf format")
     String cpf,
+
+    @NotNull(message = "The cpf field not should be null")
+    String cep,
     
     @NotNull(message = "The birthDate field not should be null")
+    @JsonFormat(pattern = "MM/dd/yyyy")
     LocalDate birthDate) {}
