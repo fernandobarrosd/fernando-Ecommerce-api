@@ -1,7 +1,7 @@
 package com.fernando.fernando_ecommerce_api.models;
 
 import com.fernando.fernando_ecommerce_api.enums.UserRole;
-import com.fernando.fernando_ecommerce_api.requests.CreateAdminRequest;
+import com.fernando.fernando_ecommerce_api.requests.AdminRequest;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +15,7 @@ public class Admin extends User {
         super(id, name, email, password, UserRole.ADMIN);
     }
 
-    public Admin(CreateAdminRequest adminRequest) {
+    public Admin(AdminRequest adminRequest) {
         super(null, adminRequest.getName(), adminRequest.getEmail(), adminRequest.getPassword(), 
         UserRole.ADMIN);
     }
