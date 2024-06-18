@@ -10,7 +10,7 @@ import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsExcepti
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 import com.fernando.fernando_ecommerce_api.models.Product;
 import com.fernando.fernando_ecommerce_api.repositories.ProductRepository;
-import com.fernando.fernando_ecommerce_api.requests.CreateProductRequest;
+import com.fernando.fernando_ecommerce_api.requests.ProductRequest;
 import com.fernando.fernando_ecommerce_api.responses.ProductResponse;
 
 @Service
@@ -18,7 +18,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     
-    public ProductResponse saveProduct(CreateProductRequest productRequest) {
+    public ProductResponse saveProduct(ProductRequest productRequest) {
         if (productRepository.findByTitle(productRequest.getTitle()).isPresent()) {
             throw new EntityAlreadyExistsException("Product %s title is already exists".formatted(productRequest.getTitle()));
         }
