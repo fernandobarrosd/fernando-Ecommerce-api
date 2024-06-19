@@ -29,7 +29,7 @@ public class ClientService {
             throw new EntityAlreadyExistsException("The user %s email is already exists".formatted(clientRequest.email()));
         }
         if (clientRepository.findByCpf(clientRequest.cpf()).isPresent()) {
-            throw new EntityAlreadyExistsException("The user %s CPF is already exists".formatted(clientRequest.email()));
+            throw new EntityAlreadyExistsException("The %s CPF is already registered".formatted(clientRequest.cpf()));
         }
         Client client = new Client(clientRequest);
         String passwordEncoded = passwordEncoder.encode(client.getPassword());
