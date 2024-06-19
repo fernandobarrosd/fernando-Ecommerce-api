@@ -13,13 +13,14 @@ public class AdminRequest {
     @NotEmpty(message = "The name field not should be empty")
     private String name;
 
-    @NotNull(message = "The e-mail field not should be null")
-    @Email(message = "The e-mail field should be in the email format")
+    @NotNull(message = "The e-mail is required")
+    @NotEmpty(message = "The email not should be empty")
+    @Email(message = "The e-mail should be a valid e-mail")
     private String email;
 
     @Setter
-    @NotNull(message = "The password field not should be null")
+    @NotNull(message = "The password is required")
 
-    @Size(min = 1, max = 16, message = "The password field should has in min 1 character and max 16 characters")
+    @Size(min = 1, max = 16, message = "The password should has in min 1 character and max 16 characters")
     private String password;
 }
