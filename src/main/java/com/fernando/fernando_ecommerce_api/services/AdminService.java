@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
 import com.fernando.fernando_ecommerce_api.models.Admin;
 import com.fernando.fernando_ecommerce_api.repositories.AdminRepository;
+import com.fernando.fernando_ecommerce_api.repositories.ClientRepository;
 import com.fernando.fernando_ecommerce_api.requests.AdminRequest;
 import com.fernando.fernando_ecommerce_api.responses.AdminResponse;
 
@@ -15,11 +16,17 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public AdminResponse saveAdmin(AdminRequest createAdminRequest) {
         if (adminRepository.findByEmail(createAdminRequest.getEmail()).isPresent()) {
-            throw new EntityAlreadyExistsException("Admin %s email is already exists".formatted(createAdminRequest.getEmail()));
+            throw new EntityAlreadyExistsException("The email %s is already exists".formatted(createAdminRequest.getEmail()));
+        }
+        if (clientRepository.findByEmail(createAdminRequest.getEmail()).isPresent()) {
+            throw new EntityAlreadyExistsException("This email %s is already exists".formatted(createAdminRequest.getEmail()));
         }
         String passwordEncoded = passwordEncoder.encode(createAdminRequest.getPassword());
         createAdminRequest.setPassword(passwordEncoded);
