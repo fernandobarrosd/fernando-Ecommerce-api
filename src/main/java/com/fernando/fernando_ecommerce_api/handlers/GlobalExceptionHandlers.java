@@ -1,4 +1,4 @@
-package com.fernando.fernando_ecommerce_api.exception_handlers;
+package com.fernando.fernando_ecommerce_api.handlers;
 
 import java.util.HashMap;
 import java.util.List;
