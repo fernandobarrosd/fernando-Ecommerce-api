@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.fernando.fernando_ecommerce_api.models.Order;
 import com.fernando.fernando_ecommerce_api.models.Product;
-import com.fernando.fernando_ecommerce_api.projections.OrderProductsProjection;
 
 public interface OrderRepository extends JpaRepository<Order, Integer>{
-    @Query("SELECT order.products FROM Order order WHERE order.id = :orderID")
-    OrderProductsProjection findAllProducts(@Param("orderID") Integer orderID);
+    @Query("SELECT o.products FROM Order o WHERE o.id = :orderID")
+    List<Product> findAllProducts(@Param("orderID") Integer orderID);
 
     @Modifying
     @Query("UPDATE Order order SET order.products = :newProducts, order.totalPrice = :newTotalPrice WHERE order.id = :orderID")
@@ -19,4 +18,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
         @Param("orderID") Integer orderID, 
         @Param("newProducts") List<Product> newProducts,
         @Param("newTotalPrice") Double newTotalPrice);
+        
+        
+        @Query("SELECT o FROM Order o WHERE o.client.id = :clientID")
+        List<Order> findAllOrdersByClientId(Integer clientID);
 }
