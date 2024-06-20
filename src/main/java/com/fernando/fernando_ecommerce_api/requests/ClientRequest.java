@@ -3,11 +3,12 @@ package com.fernando.fernando_ecommerce_api.requests;
 import java.time.LocalDate;
 import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fernando.fernando_ecommerce_api.validations.CEP;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import lombok.Builder;
 
 @Builder
@@ -28,9 +29,11 @@ public record ClientRequest(
     @CPF(message = "The cpf should be a valid CPF")
     String cpf,
 
-    @NotNull(message = "The cep is required ")
+    @NotNull(message = "The cep is required")
+    @CEP(message = "The cep should be valid")
     String cep,
     
     @NotNull(message = "The birthDate is required")
     @JsonFormat(pattern = "MM/dd/yyyy")
+    @PastOrPresent(message = "The birthDate should be past date or present")
     LocalDate birthDate) {}
