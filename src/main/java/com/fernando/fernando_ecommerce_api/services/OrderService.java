@@ -31,13 +31,22 @@ public class OrderService {
         return products.stream().map(ProductResponse::new).toArray(ProductResponse[]::new);
     }
 
+    private OrderResponse convertToOrderResponse(Order order) {
+        return OrderResponse.builder()
+        .id(order.getId())
+        .clientID(order.getClient().getId())
+        .products(convertToProductsResponses(order.getProducts()))
+        .totalPrice(order.getTotalPrice())
+        .build();
+    }
+
     @Transactional
     public OrderResponse saveOrder(Integer clientID, String[] productsTitles) {
         Optional<Client> clientOptional = clientRepository.findById(clientID);
         List<String> productsNotFounded = new ArrayList<>();
 
         if (clientOptional.isEmpty()) {
-            throw new EntityNotFoundException("The client is not exists");
+            throw new EntityNotFoundException("The client#%d is not exists".formatted(clientID));
         }
         for (String product : productsTitles) {
             if (productRepository.findByTitle(product).isEmpty()) {
@@ -46,7 +55,7 @@ public class OrderService {
         }
         if (productsNotFounded.size() == 1) {
             String productTitle = productsNotFounded.get(0);
-            throw new EntityNotFoundException("The product %s is not exists".formatted(productTitle));
+            throw new EntityNotFoundException("The product#%s is not exists".formatted(productTitle));
         }
         if (productsNotFounded.size() > 1) {
             throw new EntityNotFoundException("The products %s is not exists".formatted(productsNotFounded.toString()));
@@ -75,11 +84,21 @@ public class OrderService {
 
     public List<ProductResponse> findAllProducts(Integer orderID) {
         if (orderRepository.findById(orderID).isEmpty()) {
-            throw new EntityNotFoundException("The order %d id is not exists".formatted(orderID));
+            throw new EntityNotFoundException("The order#%d is not exists".formatted(orderID));
         }
-        return orderRepository.findAllProducts(orderID).getProducts()
+        return orderRepository.findAllProducts(orderID)
         .stream()
         .map(ProductResponse::new)
+        .toList();
+    }
+
+    public List<OrderResponse> findAllOrders(Integer clientID) {
+        if (clientRepository.findById(clientID).isEmpty()) {
+            throw new EntityNotFoundException("The user#%d is not exist".formatted(clientID));
+        }
+        return orderRepository.findAllOrdersByClientId(clientID)
+        .stream()
+        .map(this::convertToOrderResponse)
         .toList();
     }
 
@@ -89,10 +108,10 @@ public class OrderService {
         Optional<Order> orderOptional = orderRepository.findById(orderID);
 
         if (orderOptional.isEmpty()) {
-            throw new EntityNotFoundException("The order %d id is not exists".formatted(orderID));
+            throw new EntityNotFoundException("The order#%d is not exists".formatted(orderID));
         }
         if (productOptional.isEmpty()) {
-            throw new EntityNotFoundException("The product %s is not exists".formatted(productTitle));
+            throw new EntityNotFoundException("The product#%s is not exists".formatted(productTitle));
         }
         Product product = productOptional.get();
         Order order = orderOptional.get();
@@ -120,7 +139,7 @@ public class OrderService {
     public OrderResponse findById(Integer orderID) {
         Optional<Order> orderOptional = orderRepository.findById(orderID);
         if (orderOptional.isEmpty()) {
-            throw new EntityNotFoundException("The order %d id is not exists".formatted(orderID));
+            throw new EntityNotFoundException("The order#%d is not exists".formatted(orderID));
         }
         Order order = orderOptional.get();
         ProductResponse[] productsResponses = convertToProductsResponses(order.getProducts());
@@ -134,7 +153,7 @@ public class OrderService {
 
     public void deleteOrder(Integer orderID) {
         if (orderRepository.findById(orderID).isEmpty()) {
-            throw new EntityNotFoundException("The order %d id is not exists".formatted(orderID));
+            throw new EntityNotFoundException("The order#%d is not exists".formatted(orderID));
         }
         orderRepository.deleteById(orderID);
     }
