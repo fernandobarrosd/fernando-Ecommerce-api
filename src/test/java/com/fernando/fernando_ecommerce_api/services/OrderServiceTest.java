@@ -89,9 +89,9 @@ public class OrderServiceTest {
     public void shouldNotSaveOrderIfProductsNotExistis() {
         clientService.saveClient(clientRequest);
         String[] productsTitles = new String[]{
-            productRequests[0].getTitle(),
-            productRequests[1].getTitle(),
-            productRequests[2].getTitle()
+            productRequests[0].title(),
+            productRequests[1].title(),
+            productRequests[2].title()
         };
         Assertions.assertThrows(EntityNotFoundException.class, () -> orderService.saveOrder(1, productsTitles));
     }
