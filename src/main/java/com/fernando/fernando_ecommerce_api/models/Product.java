@@ -33,10 +33,10 @@ public class Product {
 
 
     public Product(ProductRequest productRequest) {
-        this.title = productRequest.getTitle();
-        this.description = productRequest.getDescription();
-        this.quantity = productRequest.getQuantity();
-        this.unitPrice = productRequest.getUnitPrice();
+        this.title = productRequest.title();
+        this.description = productRequest.description();
+        this.quantity = productRequest.quantity();
+        this.unitPrice = productRequest.unitPrice();
         this.createdAt = LocalDateTime.now();
     }
 }
