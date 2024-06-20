@@ -16,6 +16,8 @@ import com.fernando.fernando_ecommerce_api.requests.ProductRequest;
 import com.fernando.fernando_ecommerce_api.responses.ProductResponse;
 import com.fernando.fernando_ecommerce_api.services.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -23,7 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductResponse> saveProduct(@RequestBody ProductRequest productRequest ) {
+    public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest ) {
         ProductResponse productResponse = productService.saveProduct(productRequest);
         return ResponseEntity.created(null).body(productResponse);
     }
