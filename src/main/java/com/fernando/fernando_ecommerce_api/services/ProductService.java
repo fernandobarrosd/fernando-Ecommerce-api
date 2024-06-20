@@ -20,7 +20,7 @@ public class ProductService {
     
     public ProductResponse saveProduct(ProductRequest productRequest) {
         if (productRepository.findByTitle(productRequest.getTitle()).isPresent()) {
-            throw new EntityAlreadyExistsException("Product %s title is already exists".formatted(productRequest.getTitle()));
+            throw new EntityAlreadyExistsException("Product#%s is already exists".formatted(productRequest.getTitle()));
         }
         Product product = new Product(productRequest);
         productRepository.save(product);
@@ -29,7 +29,7 @@ public class ProductService {
 
     public void deleteProduct(Integer productID) {
         if (productRepository.findById(productID).isEmpty()) {
-            throw new EntityNotFoundException("This product is not exists".formatted(productID));
+            throw new EntityNotFoundException("The product#%d is not exists".formatted(productID));
         }
         productRepository.deleteById(productID);
     }
@@ -55,7 +55,7 @@ public class ProductService {
         Optional<Product> productOptional = productRepository.findById(productID);
 
         if (productOptional.isEmpty()) {
-            throw new EntityNotFoundException("This product is not exists".formatted(productID));
+            throw new EntityNotFoundException("The product#%d is not exists".formatted(productID));
         }
         return new ProductResponse(productOptional.get());
     } 
