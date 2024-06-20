@@ -19,8 +19,8 @@ public class ProductService {
     private ProductRepository productRepository;
     
     public ProductResponse saveProduct(ProductRequest productRequest) {
-        if (productRepository.findByTitle(productRequest.getTitle()).isPresent()) {
-            throw new EntityAlreadyExistsException("Product#%s is already exists".formatted(productRequest.getTitle()));
+        if (productRepository.findByTitle(productRequest.title()).isPresent()) {
+            throw new EntityAlreadyExistsException("Product#%s is already exists".formatted(productRequest.title()));
         }
         Product product = new Product(productRequest);
         productRepository.save(product);
