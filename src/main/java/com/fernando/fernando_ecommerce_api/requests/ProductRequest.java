@@ -1,16 +1,18 @@
 package com.fernando.fernando_ecommerce_api.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
-@Getter
-@AllArgsConstructor
-public class ProductRequest {
-    private String title;
-    private String description;
-    private Integer quantity;
-    @Setter
-    private Double unitPrice;
+public record ProductRequest(
+    @NotNull(message = "The title is required")
+    @NotEmpty(message = "The title should not be empty")
+    String title,
 
-}
+    @NotNull(message = "The title is required")
+    @NotEmpty(message = "The title should not be empty")
+    String description,
+
+    
+    Integer quantity,
+    Double unitPrice
+) {}
