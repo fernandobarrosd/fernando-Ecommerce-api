@@ -26,6 +26,7 @@ public class Client extends User {
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
+    @Column(nullable = false)
     private String cep;
 
     public Client() {
