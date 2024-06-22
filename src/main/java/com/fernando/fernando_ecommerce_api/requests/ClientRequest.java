@@ -3,10 +3,12 @@ package com.fernando.fernando_ecommerce_api.requests;
 import java.time.LocalDate;
 import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fernando.fernando_ecommerce_api.validations.CEP;
+import com.fernando.fernando_ecommerce_api.validations.annotations.CEP;
+import com.fernando.fernando_ecommerce_api.validations.annotations.Name;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -14,7 +16,8 @@ import lombok.Builder;
 @Builder
 public record ClientRequest(
     @NotNull(message = "The name is required")
-    @NotEmpty(message = "The name not should be empty")
+    @NotBlank(message = "The name not should be empty")
+    @Name(message = "The first name should be starts with uppercase letter and the last name starts with lowercase or uppercase")
     String name,
 
     @NotNull(message = "The e-mail is required")
