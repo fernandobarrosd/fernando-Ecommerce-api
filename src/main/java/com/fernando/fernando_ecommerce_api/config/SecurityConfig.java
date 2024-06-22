@@ -38,7 +38,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(httpRequest -> {
             httpRequest
             .requestMatchers(HttpMethod.POST, "/admin", "/client").permitAll()
-            .requestMatchers("/v1/docs/**", "/docs/**", "/swagger-ui/**").permitAll()
+            .requestMatchers("/v1/docs/**", "/docs/**", "/swagger-ui/**", "/docs/ui").permitAll()
             .requestMatchers(HttpMethod.GET, "/products", "/products/*").permitAll()
             .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
             .requestMatchers(HttpMethod.PATCH, "/products/*/unitPrice/*").hasRole("ADMIN")
