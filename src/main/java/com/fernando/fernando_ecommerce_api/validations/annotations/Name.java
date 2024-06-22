@@ -1,10 +1,18 @@
 package com.fernando.fernando_ecommerce_api.validations.annotations;
 
-import org.springframework.core.annotation.AliasFor;
-import jakarta.validation.constraints.Pattern;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import com.fernando.fernando_ecommerce_api.validations.constraints.NameConstraintValidator;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
-@Pattern(regexp = "[A-Z][a-zA-Zâãáíé]+(\\s[a-zA-Zâãáíé][a-z]+)*")
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Constraint(validatedBy = { NameConstraintValidator.class })
 public @interface Name {
-    @AliasFor(annotation = Pattern.class)
-    String message();
+    String message() default "";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }
