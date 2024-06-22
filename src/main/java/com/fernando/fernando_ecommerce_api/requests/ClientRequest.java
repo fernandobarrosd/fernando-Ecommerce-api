@@ -5,10 +5,8 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fernando.fernando_ecommerce_api.validations.annotations.CEP;
 import com.fernando.fernando_ecommerce_api.validations.annotations.Name;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
