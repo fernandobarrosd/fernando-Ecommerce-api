@@ -18,6 +18,7 @@ public class SwaggerConfig {
         .scheme("bearer");
     }
 
+    
     @Bean
     OpenAPI openAPI() {
         return new OpenAPI()
@@ -32,8 +33,8 @@ public class SwaggerConfig {
         .info(
             new Info()
             .title("Fernando Ecommerce API")
-            .description("Ecommerce API")
-            .version("1")
+            .description("Uma API de ecommerce")
+            .version("1.0")
             .contact(
                 new Contact()
                 .email("fdebarros0910-2004@hotmail.com")
