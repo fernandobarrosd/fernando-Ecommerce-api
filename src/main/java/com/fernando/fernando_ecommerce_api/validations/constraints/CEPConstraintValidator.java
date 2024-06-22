@@ -1,4 +1,6 @@
-package com.fernando.fernando_ecommerce_api.validations;
+package com.fernando.fernando_ecommerce_api.validations.constraints;
+
+import com.fernando.fernando_ecommerce_api.validations.annotations.CEP;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
