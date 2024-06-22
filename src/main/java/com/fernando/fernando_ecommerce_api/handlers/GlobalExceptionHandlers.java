@@ -3,12 +3,18 @@ package com.fernando.fernando_ecommerce_api.handlers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 import com.fernando.fernando_ecommerce_api.exceptions.EntityAlreadyExistsException;
 import com.fernando.fernando_ecommerce_api.exceptions.EntityNotFoundException;
 import com.fernando.fernando_ecommerce_api.responses.error.ResponseError;
@@ -59,6 +65,36 @@ public class GlobalExceptionHandlers {
             .build();
         return ResponseEntity.badRequest().body(responseError);
     }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ResponseError> handleMethodArgumentTypeMismatch(
+        MethodArgumentTypeMismatchException exception,
+        HttpServletRequest request) {
+            String message = "The %s request param should be a decimal number".formatted(exception.getPropertyName());
+
+            ResponseError responseError = ResponseError.builder()
+            .message(message)
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .path(request.getRequestURI())
+            .build();
+
+            return ResponseEntity.badRequest().body(responseError);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ResponseError> handleNoResourceFound(
+        NoResourceFoundException exception,
+        HttpServletRequest request) {
+            String message = "This resource is not exists";
+            
+            ResponseError responseError = ResponseError.builder()
+            .message(message)
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .path(request.getRequestURI())
+            .build();
+
+            return new ResponseEntity<ResponseError>(responseError, HttpStatusCode.valueOf(404));
+        }
 
     private Map<String, String> convertToMap(FieldError fieldError) {
         Map<String, String> field = new HashMap<>();
