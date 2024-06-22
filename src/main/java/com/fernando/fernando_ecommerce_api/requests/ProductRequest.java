@@ -1,18 +1,16 @@
 package com.fernando.fernando_ecommerce_api.requests;
 
-import com.fernando.fernando_ecommerce_api.validations.annotations.Name;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
 
 public record ProductRequest(
     @NotNull(message = "The title is required")
-    @NotBlank(message = "The title should not be empty")
-    @Name(message = "The first word should be starts with uppercase letter and the other words starts with lowercase or uppercase")
+    @NotBlank(message = "The title should be not empty")
     String title,
 
-    @NotNull(message = "The title is required")
-    @NotBlank(message = "The title should not be empty")
+    @NotNull(message = "The description is required")
+    @NotBlank(message = "The description should be not empty")
     String description,
 
     @NotNull(message = "The quantity is required")
