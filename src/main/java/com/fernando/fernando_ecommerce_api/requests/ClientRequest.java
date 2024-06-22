@@ -16,7 +16,6 @@ import lombok.Builder;
 @Builder
 public record ClientRequest(
     @NotNull(message = "The name is required")
-    @NotBlank(message = "The name not should be empty")
     @Name(message = "The first name should be starts with uppercase letter and the last name starts with lowercase or uppercase")
     String name,
 
