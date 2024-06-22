@@ -48,7 +48,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/orders").hasRole("CLIENT")
             .requestMatchers(HttpMethod.DELETE, "/orders/*").hasRole("CLIENT")
             .requestMatchers(HttpMethod.GET, "/orders/*").hasRole("CLIENT")
-            .requestMatchers(HttpMethod.GET, "/orders/*/products").hasRole("CLIENT");
+            .requestMatchers(HttpMethod.GET, "/orders/*/products").hasRole("CLIENT")
+            .anyRequest().permitAll();
         })
         .exceptionHandling(exception -> {
             exception.authenticationEntryPoint(entryPoint);
