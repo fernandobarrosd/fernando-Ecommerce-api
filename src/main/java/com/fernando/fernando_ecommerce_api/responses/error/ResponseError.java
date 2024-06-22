@@ -10,8 +10,8 @@ public record ResponseError(
         
         public String toJson() {
             return "{" + "\n" +
-                    "\t" + "\"message\": \"%s\"".formatted(message) + "\n" +
-                    "\t" + "\"statusCode\": %d".formatted(statusCode) + "\n" +
+                    "\t" + "\"message\": \"%s\"".formatted(message) + "," + "\n" +
+                    "\t" + "\"statusCode\": %d".formatted(statusCode) + "," + "\n" +
                     "\t" + "\"path\": \"%s\"".formatted(path) + "\n" +
                    "}";
         }
