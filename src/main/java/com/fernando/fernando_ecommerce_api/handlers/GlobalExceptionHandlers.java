@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -86,12 +87,29 @@ public class GlobalExceptionHandlers {
             
             ResponseError responseError = ResponseError.builder()
             .message(message)
-            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .statusCode(HttpStatus.NOT_FOUND.value())
             .path(request.getRequestURI())
             .build();
 
             return new ResponseEntity<ResponseError>(responseError, HttpStatusCode.valueOf(404));
         }
+
+        @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+        public ResponseEntity<ResponseError> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException exception,
+            HttpServletRequest request) {
+                String message = "The %s method is not allowed".formatted(request.getMethod());
+                
+                ResponseError responseError = ResponseError.builder()
+                .message(message)
+                .statusCode(HttpStatus.METHOD_NOT_ALLOWED.value())
+                .path(request.getRequestURI())
+                .build();
+    
+                return new ResponseEntity<ResponseError>(responseError, HttpStatusCode.valueOf(405));
+            }
+
+
 
     private Map<String, String> convertToMap(FieldError fieldError) {
         Map<String, String> field = new HashMap<>();
