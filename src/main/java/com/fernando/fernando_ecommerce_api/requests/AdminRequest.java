@@ -12,7 +12,6 @@ import lombok.*;
 @AllArgsConstructor
 public class AdminRequest {
     @NotNull(message = "The name field not should be null")
-    @NotBlank(message = "The name field not should be empty")
     @Name(message = "The first name should be starts with uppercase letter and the last name starts with lowercase or uppercase")
     private String name;
 
