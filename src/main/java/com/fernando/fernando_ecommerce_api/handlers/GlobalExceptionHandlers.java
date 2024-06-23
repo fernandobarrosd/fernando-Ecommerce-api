@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -108,6 +109,31 @@ public class GlobalExceptionHandlers {
     
                 return new ResponseEntity<ResponseError>(responseError, HttpStatusCode.valueOf(405));
             }
+        
+        @ExceptionHandler(HttpMessageNotReadableException.class)
+        public ResponseEntity<ResponseError> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException exception,
+            HttpServletRequest request) {
+                String message = "";
+
+                String exceptionMessage = exception.getMessage();
+                
+                if (exceptionMessage.contains("`java.time.LocalDate` from String")) {
+                    message = "The field should be dd/MM/yyyy date format";
+                }
+                else {
+                    message = "The field should be a decimal number";
+                }
+                
+                ResponseError responseError = ResponseError.builder()
+                .message(message)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .path(request.getRequestURI())
+                .build();
+
+                return ResponseEntity.badRequest().body(responseError);
+    
+        }
 
 
 
