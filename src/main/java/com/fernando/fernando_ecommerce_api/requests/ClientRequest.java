@@ -34,6 +34,6 @@ public record ClientRequest(
     String cep,
     
     @NotNull(message = "The birthDate is required")
-    @JsonFormat(pattern = "MM/dd/yyyy")
     @PastOrPresent(message = "The birthDate should be past date or present")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     LocalDate birthDate) {}
