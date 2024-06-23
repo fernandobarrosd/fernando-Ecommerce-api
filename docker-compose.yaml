@@ -6,6 +6,10 @@ services:
       context: ./
       dockerfile: dev.Dockerfile
     container_name: app
+    ports:
+      - "3000:3000"
+    expose:
+      - 3000
     depends_on: 
     - database
   database:
