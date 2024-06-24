@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,7 +18,6 @@ import com.fernando.fernando_ecommerce_api.responses.ProductResponse;
 import com.fernando.fernando_ecommerce_api.responses.error.ResponseError;
 import com.fernando.fernando_ecommerce_api.responses.error.ResponseErrorWithFields;
 import com.fernando.fernando_ecommerce_api.services.ProductService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,6 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "*")
 @Tag(name = "Product")
 public class ProductController {
     @Autowired
