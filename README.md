@@ -13,7 +13,7 @@ Uma API de ecommerce, com a possibilidade de poder criar produtos, criar pedidos
 - Listar os produtos
 - Pegar um produto específico
 - Criar admins
-- Criar clientes (apenas clientes)
+- Criar clientes
 - Autenticação via JWT
 - Login com e-mail e senha
 
