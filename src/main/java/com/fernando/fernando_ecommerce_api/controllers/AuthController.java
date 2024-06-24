@@ -2,14 +2,13 @@ package com.fernando.fernando_ecommerce_api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fernando.fernando_ecommerce_api.requests.LoginRequest;
 import com.fernando.fernando_ecommerce_api.responses.LoginResponse;
 import com.fernando.fernando_ecommerce_api.services.AuthService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@CrossOrigin(origins = "*")
 @Tag(name = "Authentication")
 public class AuthController {
     @Autowired
