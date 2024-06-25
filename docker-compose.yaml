@@ -1,31 +1,43 @@
 version: "3"
 
 services:
-  app:
-    build: 
-      context: ./
-      dockerfile: dev.Dockerfile
-    container_name: app
-    restart: always
-    ports:
-      - "3000:3000"
-    expose:
-      - 3000
-    depends_on: 
-    - database
   database:
     image: postgres
     container_name: postgres_db
+    restart: no
+    networks:
+      - app-network
     ports:
-    - "5432:5432"
+      - 5432:5432
     expose:
       - 5432
     environment:
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fernando_ecommerce_db
+      - POSTGRES_USER=postgres
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - database:/var/lib/postgresql/data
+  app:
+    depends_on:
+      - database
+    build: 
+      context: ./
+      dockerfile: dev.Dockerfile
+    volumes:
+      - app:/app
+    restart: on-failure
+    networks:
+      - app-network
+    container_name: app
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
 
 
 volumes:
   database:
+  app:
+networks:
+  app-network:
