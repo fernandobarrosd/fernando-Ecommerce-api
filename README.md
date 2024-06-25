@@ -42,4 +42,4 @@ Para acessar a API é só usar um dos links:
 
 Link da API para poder efetuar as requisiçoes: https://ministerial-felice-fernando-barros-934bbc18.koyeb.app
 <br>
-Link da documentação da API para você poder testar a API (**Obs:. A documentação está com problemas, mas em breve eu irei arrumar isso**): https://ministerial-felice-fernando-barros-934bbc18.koyeb.app/docs/ui
+Link da documentação da API para você poder testar a API: https://ministerial-felice-fernando-barros-934bbc18.koyeb.app/docs/ui
