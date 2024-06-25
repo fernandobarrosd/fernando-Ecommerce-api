@@ -21,6 +21,7 @@ Uma API de ecommerce, com a possibilidade de poder criar produtos, criar pedidos
 - [Java](https://www.java.com/pt-BR/)
 - [Spring Framework](https://spring.io/projects/spring-framework)
 - [Spring Boot](https://spring.io/projects/spring-boot)
+- [Spring Web](https://docs.spring.io/spring-boot/reference/web/index.html)
 - [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Java JWT](https://github.com/auth0/java-jwt)
